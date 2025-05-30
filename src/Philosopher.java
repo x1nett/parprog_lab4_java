@@ -20,16 +20,22 @@ public class Philosopher extends Thread {
                 if (id % 2 == 0) {
                     table.getFork(leftFork);
                     table.getFork(rightFork);
+
+                    System.out.println("Філософ " + id + " їсть " + (i + 1) + " разів");
+                    Thread.sleep(100);
+                        
+                    table.putFork(leftFork);
+                    table.putFork(rightFork);
                 } else {
                     table.getFork(rightFork);
                     table.getFork(leftFork);
+
+                    System.out.println("Філософ " + id + " їсть " + (i + 1) + " разів");
+                    Thread.sleep(100);
+
+                    table.putFork(rightFork);
+                    table.putFork(leftFork);
                 }
-
-                System.out.println("Філософ " + id + " їсть " + (i + 1) + " разів");
-                Thread.sleep(100);
-
-                table.putFork(leftFork);
-                table.putFork(rightFork);
             }
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
