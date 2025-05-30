@@ -3,10 +3,12 @@ public class Philosopher extends Thread {
     private final int leftFork;
     private final int rightFork;
     private final Table table;
+    private final Waiter waiter;
 
-    public Philosopher(int id, Table table) {
+    public Philosopher(int id, Table table, Waiter waiter) {
         this.id = id;
         this.table = table;
+        this.waiter = waiter;
         this.rightFork = id;
         this.leftFork = (id + 1) % 5;
     }
@@ -15,25 +17,21 @@ public class Philosopher extends Thread {
     public void run() {
         try {
             for (int i = 0; i < 10; i++) {
-                System.out.println("Філософ " + id + " думає (" + (i + 1) + ")");
+                System.out.println("Філософ " + id + " думає " + (i + 1) + "разів");
 
-                // Чекаємо дозволу у офіціанта (токен)
-                table.requestPermission();
+                waiter.requestPermission();
 
-                // Беремо виделки
                 table.getFork(rightFork);
                 table.getFork(leftFork);
 
-                System.out.println("Філософ " + id + " їсть (" + (i + 1) + ")");
+                System.out.println("Філософ " + id + " їсть " + (i + 1) + "разів");
 
-                Thread.sleep(100); // імітація їжі
+                Thread.sleep(100);
 
-                // Кладемо виделки
                 table.putFork(leftFork);
                 table.putFork(rightFork);
 
-                // Відпускаємо дозвіл офіціанту
-                table.releasePermission();
+                waiter.releasePermission();
             }
             System.out.println("Філософ " + id + " поїв.");
         } catch (InterruptedException e) {
