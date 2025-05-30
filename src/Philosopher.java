@@ -17,7 +17,7 @@ public class Philosopher extends Thread {
             for (int i = 0; i < 10; i++) {
                 System.out.println("Філософ " + id + " думає " + (i + 1) + " разів");
 
-                if (id == id % 2 == 0) {
+                if (id % 2 == 0) {
                     table.getFork(leftFork);
                     table.getFork(rightFork);
                 } else {
