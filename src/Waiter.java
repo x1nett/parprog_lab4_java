@@ -1,17 +1,17 @@
 import java.util.concurrent.Semaphore;
 
 public class Waiter {
-    private final Semaphore semaphore;
+    private final Semaphore permission;
 
-    public Waiter(int maxDiners) {
-        semaphore = new Semaphore(maxDiners);
+    public Waiter(int maxAllowedPhilosophers) {
+        this.permission = new Semaphore(maxAllowedPhilosophers);
     }
 
     public void requestPermission() throws InterruptedException {
-        semaphore.acquire();
+        permission.acquire();
     }
 
     public void releasePermission() {
-        semaphore.release();
+        permission.release();
     }
 }
